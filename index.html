@@ -3,11 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>法学256班级空间</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hello World</h1>
+    <header>
+        <h1>法学256班级空间</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#profile">班级名片</a></li>
+                <li><a href="#gallery">生活剪影</a></li>
+                <li><a href="#library">学习图书馆</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home" class="card">
+            <h2>首页</h2>
+            <div class="placeholder-image">
+                <p>欢迎来到法学256班级空间！这里是我们的线上家园。</p>
+            </div>
+        </section>
+        <section id="profile" class="card">
+            <h2>班级名片</h2>
+            <div class="placeholder-image">
+                <p>班级简介、班委成员、班级口号等信息展示</p>
+            </div>
+        </section>
+        <section id="gallery" class="card">
+            <h2>生活剪影</h2>
+            <div class="placeholder-image">
+                <p>班级活动照片、日常学习生活记录</p>
+            </div>
+        </section>
+        <section id="library" class="card">
+            <h2>学习图书馆</h2>
+            <div class="search-container">
+                <input type="search" id="searchInput" placeholder="搜索教材名称或学科..." aria-label="搜索教材">
+                <button type="button">搜索</button>
+            </div>
+            <table class="materials-table">
+                <thead>
+                    <tr>
+                        <th>教材名称</th>
+                        <th>学科</th>
+                        <th>格式</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="libraryBody">
+                    <!-- 教材数据将通过 JavaScript 动态生成 -->
+                </tbody>
+            </table>
+        </section>
+    </main>
     <script src="app.js"></script>
 </body>
 </html>
