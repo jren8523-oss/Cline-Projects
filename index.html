@@ -34,20 +34,30 @@
             <div class="timeline-container">
                 <div class="timeline-section">
                     <h3 class="timeline-title">近期历程 / TIMELINE</h3>
-                    <ul class="timeline-list">
-                        <li><strong>2025.10.15</strong> 校运动会团体总分第一名</li>
-                        <li><strong>2025.12.01</strong> 全校先进班集体</li>
-                        <li><strong>2026.03.15</strong> 优良学风班标兵</li>
-                    </ul>
+                    <ul class="timeline-list" id="timeline-container"></ul>
                 </div>
             </div>
         </div>
     </main>
+    <script src="timeline-data.js"></script>
     <footer>
         <p>&copy; 2025 法学256班级空间. 保留所有权利.</p>
     </footer>
     <script src="app.js"></script>
     <script>
+        // 渲染时间轴
+        function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+            window.timelineData.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${item.date}</strong> ${item.event}`;
+                container.appendChild(li);
+            });
+        }
+
+        // 页面加载完成后渲染时间轴
+        document.addEventListener('DOMContentLoaded', renderTimeline);
+        
         // 照片视窗数据
         const galleryData = [
             {
