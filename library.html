@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班级图书馆 - 法学256班级空间</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>法学256班级空间</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="gallery.html">画廊</a></li>
+                <li><a href="profile.html">班级名片</a></li>
+                <li><a href="library.html">班级图书馆</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Library Section -->
+        <section id="library" class="card">
+            <h2>学习图书馆</h2>
+            <div class="search-container">
+                <input type="search" id="searchInput" placeholder="搜索教材名称或学科..." aria-label="搜索教材">
+                <button type="button">搜索</button>
+            </div>
+            
+            <!-- 网盘链接索引系统 - 动态生成 -->
+            <div class="resource-list" id="resourceList">
+                <!-- 资源卡片将通过 JavaScript 动态生成 -->
+                <div class="resource-card">
+                    <h3 class="resource-title">法学核心教材</h3>
+                    <div class="resource-bottom">
+                        <div class="resource-links">
+                            <a href="#" class="resource-btn baidu-btn">百度网盘</a>
+                            <a href="#" class="resource-btn quark-btn">夸克网盘</a>
+                        </div>
+                        <div class="resource-actions">
+                            <button class="action-btn copy-btn">复制链接</button>
+                            <button class="action-btn report-btn">报告问题</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <h3 class="resource-title">司法考试资料</h3>
+                    <div class="resource-bottom">
+                        <div class="resource-links">
+                            <a href="#" class="resource-btn baidu-btn">百度网盘</a>
+                            <a href="#" class="resource-btn quark-btn">夸克网盘</a>
+                        </div>
+                        <div class="resource-actions">
+                            <button class="action-btn copy-btn">复制链接</button>
+                            <button class="action-btn report-btn">报告问题</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 法学256班级空间. 保留所有权利.</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>

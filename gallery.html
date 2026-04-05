@@ -14,39 +14,39 @@
                 <li><a href="index.html">首页</a></li>
                 <li><a href="gallery.html">画廊</a></li>
                 <li><a href="profile.html">班级名片</a></li>
-                <li><a href="index.html#library">班级图书馆</a></li>
+                <li><a href="library.html">班级图书馆</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <div class="gallery-grid">
             <!-- 相册卡片 1 -->
-            <a href="#" class="album-card">
+            <a href="#banhui" class="album-card" data-album="banhui">
                 <div class="album-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="2025秋季田径运动会">
+                    <img src="assets/images/banhui/cover.png" alt="班会记录">
                 </div>
                 <div class="album-info">
-                    <h3>2025秋季田径运动会</h3>
+                    <h3>班会记录</h3>
                     <div class="album-meta">2025-10-15 · 共 24 张</div>
                 </div>
             </a>
             <!-- 相册卡片 2 -->
-            <a href="#" class="album-card">
+            <a href="#wenti" class="album-card" data-album="wenti">
                 <div class="album-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="班级读书会">
+                    <img src="assets/images/wenti/cover.png" alt="文体活动">
                 </div>
                 <div class="album-info">
-                    <h3>班级读书会</h3>
+                    <h3>文体活动</h3>
                     <div class="album-meta">2025-09-28 · 共 18 张</div>
                 </div>
             </a>
             <!-- 相册卡片 3 -->
-            <a href="#" class="album-card">
+            <a href="#hezhao" class="album-card" data-album="hezhao">
                 <div class="album-img-wrapper">
-                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="春游踏青">
+                    <img src="assets/images/hezhao/Gemini_Generated_Image_kva1y1kva1y1kva1.png" alt="班级合照">
                 </div>
                 <div class="album-info">
-                    <h3>春游踏青</h3>
+                    <h3>班级合照</h3>
                     <div class="album-meta">2025-04-12 · 共 32 张</div>
                 </div>
             </a>
@@ -55,5 +55,143 @@
     <footer>
         <p>&copy; 2025 法学256班级空间. 保留所有权利.</p>
     </footer>
+    
+    <!-- Lightbox 浮窗 -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-background"></div>
+        <div class="lightbox-content">
+            <button class="lightbox-close" aria-label="关闭">&times;</button>
+            <button class="lightbox-arrow lightbox-prev" aria-label="上一张">‹</button>
+            <button class="lightbox-arrow lightbox-next" aria-label="下一张">›</button>
+            <div class="lightbox-image-container">
+                <img class="lightbox-image" src="" alt="">
+            </div>
+            <div class="lightbox-info">
+                <span class="lightbox-counter"></span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 相册数据
+        const albumData = {
+            "banhui": ["assets/images/banhui/cover.png"],
+            "wenti": ["assets/images/wenti/cover.png"],
+            "hezhao": ["assets/images/hezhao/Gemini_Generated_Image_kva1y1kva1y1kva1.png"]
+        };
+        
+        // 自动更新计数
+        function updateAlbumCounts() {
+            const albumCards = document.querySelectorAll('.album-card');
+            
+            albumCards.forEach(card => {
+                const albumName = card.getAttribute('data-album');
+                const albumImages = albumData[albumName];
+                
+                if (albumImages) {
+                    const count = albumImages.length;
+                    const metaElement = card.querySelector('.album-meta');
+                    
+                    // 提取日期部分，保留原有日期格式
+                    const metaText = metaElement.textContent;
+                    const dateMatch = metaText.match(/^(\d{4}-\d{2}-\d{2})/);
+                    
+                    if (dateMatch) {
+                        const date = dateMatch[1];
+                        metaElement.textContent = `${date} · 共 ${count} 张`;
+                    }
+                }
+            });
+        }
+        
+        // Lightbox 功能
+        let currentAlbum = null;
+        let currentIndex = 0;
+        
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.querySelector('.lightbox-image');
+        const lightboxCounter = document.querySelector('.lightbox-counter');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        const lightboxPrev = document.querySelector('.lightbox-prev');
+        const lightboxNext = document.querySelector('.lightbox-next');
+        const lightboxBackground = document.querySelector('.lightbox-background');
+        
+        // 打开 Lightbox
+        function openLightbox(albumName) {
+            currentAlbum = albumName;
+            currentIndex = 0;
+            updateLightboxImage();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 关闭 Lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // 更新 Lightbox 图片
+        function updateLightboxImage() {
+            const images = albumData[currentAlbum];
+            if (images && images.length > 0) {
+                lightboxImage.src = images[currentIndex];
+                lightboxImage.alt = `相册 ${currentAlbum} 的第 ${currentIndex + 1} 张图片`;
+                lightboxCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+            }
+        }
+        
+        // 切换到上一张
+        function goToPrev() {
+            const images = albumData[currentAlbum];
+            if (images && images.length > 0) {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateLightboxImage();
+            }
+        }
+        
+        // 切换到下一张
+        function goToNext() {
+            const images = albumData[currentAlbum];
+            if (images && images.length > 0) {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateLightboxImage();
+            }
+        }
+        
+        // 事件监听器
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAlbumCounts();
+            
+            // 为相册卡片添加点击事件
+            const albumCards = document.querySelectorAll('.album-card');
+            albumCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const albumName = card.getAttribute('data-album');
+                    openLightbox(albumName);
+                });
+            });
+            
+            // Lightbox 控制事件
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxBackground.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', goToPrev);
+            lightboxNext.addEventListener('click', goToNext);
+            
+            // 键盘支持
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.classList.contains('active')) {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowLeft') {
+                        goToPrev();
+                    } else if (e.key === 'ArrowRight') {
+                        goToNext();
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
