@@ -19,37 +19,8 @@
         </nav>
     </header>
     <main>
-        <div class="gallery-grid">
-            <!-- 相册卡片 1 -->
-            <a href="#banhui" class="album-card" data-album="banhui">
-                <div class="album-img-wrapper">
-                    <img src="assets/images/banhui/cover.png" alt="班会记录">
-                </div>
-                <div class="album-info">
-                    <h3>班会记录</h3>
-                    <div class="album-meta">2025-10-15 · 共 24 张</div>
-                </div>
-            </a>
-            <!-- 相册卡片 2 -->
-            <a href="#wenti" class="album-card" data-album="wenti">
-                <div class="album-img-wrapper">
-                    <img src="assets/images/wenti/cover.png" alt="文体活动">
-                </div>
-                <div class="album-info">
-                    <h3>文体活动</h3>
-                    <div class="album-meta">2025-09-28 · 共 18 张</div>
-                </div>
-            </a>
-            <!-- 相册卡片 3 -->
-            <a href="#hezhao" class="album-card" data-album="hezhao">
-                <div class="album-img-wrapper">
-                    <img src="assets/images/hezhao/Gemini_Generated_Image_kva1y1kva1y1kva1.png" alt="班级合照">
-                </div>
-                <div class="album-info">
-                    <h3>班级合照</h3>
-                    <div class="album-meta">2025-04-12 · 共 32 张</div>
-                </div>
-            </a>
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- 动态生成的相册卡片将在这里显示 -->
         </div>
     </main>
     <footer>
@@ -74,6 +45,77 @@
     
     <script src="gallery-data.js"></script>
     <script>
+        // 文件夹名称映射字典
+        const folderNames = {
+            "banhui": "班会记录",
+            "wenti": "文体活动",
+            "hezhao": "班级合照"
+        };
+        
+        // 动态渲染画廊卡片
+        function renderGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            
+            // 清空现有内容（如果有的话）
+            galleryGrid.innerHTML = '';
+            
+            // 遍历 albumData 中的所有相册
+            for (const folderKey in window.albumData) {
+                if (!window.albumData.hasOwnProperty(folderKey)) continue;
+                
+                const albumImages = window.albumData[folderKey];
+                if (!albumImages || albumImages.length === 0) continue;
+                
+                // 获取中文标题，如果找不到则使用大写的文件夹名
+                const chineseTitle = folderNames[folderKey] || folderKey.toUpperCase();
+                
+                // 获取封面图（优先使用 cover.png，否则使用第一张图片）
+                let coverImage = albumImages.find(img => img.includes('cover.png'));
+                if (!coverImage) {
+                    coverImage = albumImages[0];
+                }
+                
+                // 创建相册卡片元素
+                const albumCard = document.createElement('a');
+                albumCard.href = `#${folderKey}`;
+                albumCard.className = 'album-card';
+                albumCard.setAttribute('data-album', folderKey);
+                
+                // 创建图片包装器
+                const imgWrapper = document.createElement('div');
+                imgWrapper.className = 'album-img-wrapper';
+                
+                const img = document.createElement('img');
+                img.src = coverImage;
+                img.alt = chineseTitle;
+                imgWrapper.appendChild(img);
+                
+                // 创建相册信息
+                const albumInfo = document.createElement('div');
+                albumInfo.className = 'album-info';
+                
+                const title = document.createElement('h3');
+                title.textContent = chineseTitle;
+                
+                const meta = document.createElement('div');
+                meta.className = 'album-meta';
+                // 使用当前日期作为默认日期，因为原始数据中没有日期信息
+                const today = new Date();
+                const formattedDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                meta.textContent = `${formattedDate} · 共 ${albumImages.length} 张`;
+                
+                albumInfo.appendChild(title);
+                albumInfo.appendChild(meta);
+                
+                // 组装卡片
+                albumCard.appendChild(imgWrapper);
+                albumCard.appendChild(albumInfo);
+                
+                // 添加到画廊网格
+                galleryGrid.appendChild(albumCard);
+            }
+        }
+        
         // 自动更新计数
         function updateAlbumCounts() {
             const albumCards = document.querySelectorAll('.album-card');
@@ -155,16 +197,21 @@
         
         // 事件监听器
         document.addEventListener('DOMContentLoaded', () => {
+            // 首先渲染画廊
+            renderGallery();
+            
+            // 然后更新计数（虽然 renderGallery 已经设置了正确的计数，但保留此函数以备后用）
             updateAlbumCounts();
             
-            // 为相册卡片添加点击事件
-            const albumCards = document.querySelectorAll('.album-card');
-            albumCards.forEach(card => {
-                card.addEventListener('click', (e) => {
+            // 使用事件委托处理相册卡片点击事件
+            document.addEventListener('click', (e) => {
+                // 检查点击的元素是否是相册卡片或其子元素
+                const albumCard = e.target.closest('.album-card');
+                if (albumCard) {
                     e.preventDefault();
-                    const albumName = card.getAttribute('data-album');
+                    const albumName = albumCard.getAttribute('data-album');
                     openLightbox(albumName);
-                });
+                }
             });
             
             // Lightbox 控制事件

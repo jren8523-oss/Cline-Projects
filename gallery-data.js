@@ -1,5 +1,6 @@
 window.albumData = {
     "banhui": [
+        "assets/images/banhui/1.png",
         "assets/images/banhui/cover.png"
     ],
     "hezhao": [
