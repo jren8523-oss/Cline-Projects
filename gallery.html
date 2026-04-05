@@ -72,21 +72,15 @@
         </div>
     </div>
     
+    <script src="gallery-data.js"></script>
     <script>
-        // 相册数据
-        const albumData = {
-            "banhui": ["assets/images/banhui/cover.png"],
-            "wenti": ["assets/images/wenti/cover.png"],
-            "hezhao": ["assets/images/hezhao/Gemini_Generated_Image_kva1y1kva1y1kva1.png"]
-        };
-        
         // 自动更新计数
         function updateAlbumCounts() {
             const albumCards = document.querySelectorAll('.album-card');
             
             albumCards.forEach(card => {
                 const albumName = card.getAttribute('data-album');
-                const albumImages = albumData[albumName];
+                const albumImages = window.albumData[albumName];
                 
                 if (albumImages) {
                     const count = albumImages.length;
@@ -133,7 +127,7 @@
         
         // 更新 Lightbox 图片
         function updateLightboxImage() {
-            const images = albumData[currentAlbum];
+            const images = window.albumData[currentAlbum];
             if (images && images.length > 0) {
                 lightboxImage.src = images[currentIndex];
                 lightboxImage.alt = `相册 ${currentAlbum} 的第 ${currentIndex + 1} 张图片`;
@@ -143,7 +137,7 @@
         
         // 切换到上一张
         function goToPrev() {
-            const images = albumData[currentAlbum];
+            const images = window.albumData[currentAlbum];
             if (images && images.length > 0) {
                 currentIndex = (currentIndex - 1 + images.length) % images.length;
                 updateLightboxImage();
@@ -152,7 +146,7 @@
         
         // 切换到下一张
         function goToNext() {
-            const images = albumData[currentAlbum];
+            const images = window.albumData[currentAlbum];
             if (images && images.length > 0) {
                 currentIndex = (currentIndex + 1) % images.length;
                 updateLightboxImage();
