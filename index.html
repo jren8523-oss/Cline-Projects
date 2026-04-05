@@ -11,53 +11,115 @@
         <h1>法学256班级空间</h1>
         <nav>
             <ul>
-                <li><a href="#home">首页</a></li>
-                <li><a href="#profile">班级名片</a></li>
-                <li><a href="#gallery">生活剪影</a></li>
-                <li><a href="#library">学习图书馆</a></li>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="gallery.html">画廊</a></li>
+                <li><a href="profile.html">班级名片</a></li>
+                <li><a href="index.html#library">班级图书馆</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section id="home" class="card">
-            <h2>首页</h2>
-            <div class="placeholder-image">
-                <p>欢迎来到法学256班级空间！这里是我们的线上家园。</p>
+        <div class="memorial-dashboard">
+            <!-- 左侧：高级照片视窗 -->
+            <div class="carousel-container">
+                <div class="hero-carousel">
+                    <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="2025秋季田径运动会" class="carousel-image">
+                    <button class="carousel-arrow carousel-prev" aria-label="上一张"><</button>
+                    <button class="carousel-arrow carousel-next" aria-label="下一张">></button>
+                    <a href="gallery.html" class="carousel-route" id="carouselRoute">2025秋季田径运动会</a>
+                </div>
             </div>
-        </section>
-        <section id="profile" class="card">
-            <h2>班级名片</h2>
-            <div class="placeholder-image">
-                <p>班级简介、班委成员、班级口号等信息展示</p>
+            
+            <!-- 右侧：极简动态时间轴 -->
+            <div class="timeline-container">
+                <div class="timeline-section">
+                    <h3 class="timeline-title">近期历程 / TIMELINE</h3>
+                    <ul class="timeline-list">
+                        <li><strong>2025.10.15</strong> 校运动会团体总分第一名</li>
+                        <li><strong>2025.12.01</strong> 全校先进班集体</li>
+                        <li><strong>2026.03.15</strong> 优良学风班标兵</li>
+                    </ul>
+                </div>
             </div>
-        </section>
-        <section id="gallery" class="card">
-            <h2>生活剪影</h2>
-            <div class="placeholder-image">
-                <p>班级活动照片、日常学习生活记录</p>
-            </div>
-        </section>
-        <section id="library" class="card">
-            <h2>学习图书馆</h2>
-            <div class="search-container">
-                <input type="search" id="searchInput" placeholder="搜索教材名称或学科..." aria-label="搜索教材">
-                <button type="button">搜索</button>
-            </div>
-            <table class="materials-table">
-                <thead>
-                    <tr>
-                        <th>教材名称</th>
-                        <th>学科</th>
-                        <th>格式</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody id="libraryBody">
-                    <!-- 教材数据将通过 JavaScript 动态生成 -->
-                </tbody>
-            </table>
-        </section>
+        </div>
     </main>
+    <footer>
+        <p>&copy; 2025 法学256班级空间. 保留所有权利.</p>
+    </footer>
     <script src="app.js"></script>
+    <script>
+        // 照片视窗数据
+        const galleryData = [
+            {
+                imgSrc: 'https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                sectionName: '2025秋季田径运动会',
+                link: 'gallery.html'
+            },
+            {
+                imgSrc: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                sectionName: '班级读书会',
+                link: 'gallery.html'
+            },
+            {
+                imgSrc: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                sectionName: '春游踏青',
+                link: 'gallery.html'
+            }
+        ];
+
+        // 获取DOM元素
+        const carouselImage = document.querySelector('.carousel-image');
+        const carouselRoute = document.getElementById('carouselRoute');
+        const prevButton = document.querySelector('.carousel-prev');
+        const nextButton = document.querySelector('.carousel-next');
+
+        // 当前索引
+        let currentIndex = 0;
+
+        // 更新视窗内容
+        function updateCarousel() {
+            const item = galleryData[currentIndex];
+            carouselImage.src = item.imgSrc;
+            carouselImage.alt = item.sectionName;
+            carouselRoute.textContent = item.sectionName;
+            carouselRoute.href = item.link;
+        }
+
+        // 切换到上一张
+        function goToPrev() {
+            currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+            carouselImage.style.opacity = '0';
+            setTimeout(() => {
+                updateCarousel();
+                carouselImage.style.opacity = '1';
+            }, 100);
+        }
+
+        // 切换到下一张
+        function goToNext() {
+            currentIndex = (currentIndex + 1) % galleryData.length;
+            carouselImage.style.opacity = '0';
+            setTimeout(() => {
+                updateCarousel();
+                carouselImage.style.opacity = '1';
+            }, 100);
+        }
+
+        // 初始化
+        updateCarousel();
+
+        // 事件监听器
+        prevButton.addEventListener('click', goToPrev);
+        nextButton.addEventListener('click', goToNext);
+
+        // 键盘支持（左右箭头键）
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                goToPrev();
+            } else if (e.key === 'ArrowRight') {
+                goToNext();
+            }
+        });
+    </script>
 </body>
 </html>
