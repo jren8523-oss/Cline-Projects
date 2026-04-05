@@ -21,22 +21,8 @@
     <main>
         <section class="honors">
             <h2>班级荣誉</h2>
-            <div class="honors-grid">
-                <div class="honor-card">
-                    <div class="honor-icon">🏆</div>
-                    <h3>全校先进班集体</h3>
-                    <p class="honor-date">2025年12月</p>
-                </div>
-                <div class="honor-card">
-                    <div class="honor-icon">🏃</div>
-                    <h3>校运动会团体总分第一名</h3>
-                    <p class="honor-date">2025年10月</p>
-                </div>
-                <div class="honor-card">
-                    <div class="honor-icon">📚</div>
-                    <h3>优良学风班标兵</h3>
-                    <p class="honor-date">2026年03月</p>
-                </div>
+            <div class="honors-grid" id="honors-container">
+                <!-- 荣誉卡片将通过 JavaScript 动态生成 -->
             </div>
         </section>
         <section class="committee">
@@ -80,6 +66,7 @@
     <footer>
         <p>&copy; 2025 法学256班级空间. 保留所有权利.</p>
     </footer>
+    <script src="honors-data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

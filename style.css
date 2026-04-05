@@ -524,16 +524,28 @@ footer {
     text-align: center;
 }
 
-.honors-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+#honors-container {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
+    
+    /* 增加移动端丝滑阻尼感 */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    
+    /* 隐藏默认滚动条但保持可滚动 */
+    scrollbar-width: none; /* Firefox */
+}
+
+#honors-container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Edge */
 }
 
 @media (max-width: 768px) {
-    .honors-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+    #honors-container {
+        gap: 15px;
     }
 }
 
@@ -550,6 +562,9 @@ footer {
     align-items: center;
     justify-content: center;
     min-height: 250px;
+    flex: 0 0 280px;
+    max-width: 80vw;
+    scroll-snap-align: start;
 }
 
 .honor-card:hover {

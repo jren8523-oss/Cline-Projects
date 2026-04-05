@@ -202,5 +202,44 @@ function initResourceLibrary() {
     }
 }
 
+// 荣誉卡片渲染函数
+function renderHonors() {
+    const container = document.getElementById('honors-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (window.honorsData && Array.isArray(window.honorsData)) {
+        window.honorsData.forEach(honor => {
+            const card = document.createElement('div');
+            card.className = 'honor-card';
+            
+            const icon = document.createElement('div');
+            icon.className = 'honor-icon';
+            icon.textContent = honor.icon;
+            
+            const title = document.createElement('h3');
+            title.textContent = honor.title;
+            
+            const date = document.createElement('p');
+            date.className = 'honor-date';
+            date.textContent = honor.date;
+            
+            card.appendChild(icon);
+            card.appendChild(title);
+            card.appendChild(date);
+            container.appendChild(card);
+        });
+    }
+}
+
+// 初始化荣誉渲染
+function initHonors() {
+    renderHonors();
+}
+
 // 当DOM加载完成后初始化
-document.addEventListener('DOMContentLoaded', initResourceLibrary);
+document.addEventListener('DOMContentLoaded', function() {
+    initResourceLibrary();
+    initHonors();
+});
